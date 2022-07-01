@@ -45,6 +45,14 @@ var (
 		},
 	}
 
+	getPreviewSceneCmd = &coral.Command{
+		Use:   "getpreview",
+		Short: "Get the preview scene (studio mode must be enabled)",
+		RunE: func(cmd *coral.Command, args []string) error {
+			return getPreviewScene()
+		},
+	}
+
 	previewSceneCmd = &coral.Command{
 		Use:   "preview",
 		Short: "Switch preview to a different scene (studio mode must be enabled)",
@@ -90,6 +98,16 @@ func getScene() error {
 	return nil
 }
 
+func getPreviewScene() error {
+	r, err := client.StudioMode.GetPreviewScene()
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(r.Name)
+	return nil
+}
+
 func setCurrentScene(scene string) error {
 	r := scenes.SetCurrentSceneParams{
 		SceneName: scene,
@@ -122,6 +140,7 @@ func init() {
 	sceneCmd.AddCommand(currentSceneCmd)
 	sceneCmd.AddCommand(listSceneCmd)
 	sceneCmd.AddCommand(getSceneCmd)
+	sceneCmd.AddCommand(getPreviewSceneCmd)
 	sceneCmd.AddCommand(previewSceneCmd)
 	sceneCmd.AddCommand(switchSceneCmd)
 	rootCmd.AddCommand(sceneCmd)

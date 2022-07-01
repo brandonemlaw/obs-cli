@@ -93,6 +93,12 @@ Show the current scene name:
 obs-cli scene get
 ```
 
+Show the preview scene name:
+
+```
+obs-cli scene getpreview
+```
+
 Switch program to a scene:
 
 ```
